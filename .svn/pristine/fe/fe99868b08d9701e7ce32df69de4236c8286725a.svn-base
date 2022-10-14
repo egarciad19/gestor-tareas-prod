@@ -1,0 +1,14 @@
+.center{
+    display: grid;
+}
+
+.form {
+  align-self: center;
+  justify-self: center;
+  width: 25%;
+  margin-top: 10%;
+}
+
+mat-form-field{
+    display: block;
+}

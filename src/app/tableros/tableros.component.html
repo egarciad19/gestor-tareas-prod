@@ -1,0 +1,27 @@
+<app-menu></app-menu>
+<div style="margin-left:15%;padding:1px 16px;height:500px;">
+  <div class="sticky">
+    <h1>Mis Tableros</h1>
+  </div>
+
+  <div *ngIf="!existenTableros" style="text-align: center;">
+    <h2 style="color: #cd0000; display: inline;">No existen Tableros, crea uno!</h2>
+    <button routerLink="/crear-tablero" mat-raised-button color="primary" style="margin-left: 10px;">Crear Tablero</button><br>
+    <img src="assets/resources/img/noactividad.png">
+  </div>
+
+  <div class="grid-container">
+      <mat-card class="mat-elevation-z4" *ngFor="let t of tableros">
+      <mat-card-title>
+        <button style="font-size: 20px;" [routerLink]="['/tablero', t.codigoTablero]" mat-icon-button color="primary">
+          {{t.nombreTablero}}
+        </button>
+      </mat-card-title>
+      <mat-card-subtitle>{{t.usuarioAdiciono}}</mat-card-subtitle>
+      <mat-card-content>
+
+        <p>{{t.descripcion}}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

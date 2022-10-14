@@ -1,0 +1,210 @@
+<app-menu></app-menu>
+
+
+<div style="margin-left:15%;padding:1px 16px;height:500px;">
+
+    <div class="flex-container-tablero">
+        <div class="flex-left-tablero">
+            <button style="font-size: 18px;"  mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+                {{tablero.nombreTablero}}
+                <span class="material-icons">
+                    event_available
+                </span>
+            </button>
+        </div>
+        <div class="flex-center-tablero">
+            <button  mat-raised-button color="primary" (click)="openCrearListaTarea()">
+                Crear Lista Tarea
+                <span class="material-icons">
+                    add_circle
+                </span>
+            </button>
+            <button mat-raised-button color="basic" (click)="compartir()">
+                Compartir
+                <span class="material-icons">
+                    share
+                </span>
+            </button>
+            <button mat-raised-button color="basic" (click)="verCrearEtiquetas()">
+                Etiquetas
+                <span class="material-icons">
+                    tag
+                </span>
+            </button>
+        </div>
+    </div>
+                
+    <hr>
+
+    <div class="flex-container">
+        <!--seccion de Listado de Tareas-->
+        <div class="flex-item-left">
+            <mat-card *ngIf="existenListas" style=" height: 550px; overflow:auto">
+                <button (click)="refrescarListas()"  mat-icon-button>
+                    <mat-icon>update</mat-icon>
+                    Listas de Tareas
+                </button>
+                <mat-card-content>
+                    <mat-accordion> <!--ngFor permite recorrer el arreglo de listas de tareas, creando varios acordiones-->
+                        <mat-expansion-panel *ngFor="let l of arrayListas" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    {{l.nombreLista}}
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <!--Boton donde se listan las tareas de cada lista-->
+                            <button 
+                                *ngFor="let t of l.tareas" 
+                                (click)="verTareaSeleccionada(t.codigoTarea, t.nombreTarea, l.codigoLista, l.nombreLista)"
+                                style="display: block;" 
+                                mat-icon-button mat color="primary">
+                                {{t.nombreTarea}} 
+                            </button>
+                            <button 
+                                (click)="openCrearTarea(l.codigoLista, l.nombreLista)"
+                                style="display: block;" 
+                                mat-icon-button mat color="primary">
+                                Crear Tarea
+                                <span class="material-icons">add_circle</span>
+                            </button>
+
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+        <!--Seccion de Tarea seleccionada-->
+        <div class="flex-item-center">
+
+            <div *ngIf="!existenListas" style="text-align: center; padding: 40px; color: #cd0000;">
+                <h2>Este tablero no tiene Listas de Tareas, puede crear una.</h2>
+                <img src="assets/resources/img/noactividad.png">
+            </div>  
+
+            <app-tarea-seleccionada 
+            *ngIf="verTarea"
+            [idTareaSeleccionada]="idTarea"
+            [nombreTareaSeleccionada]="nombreTarea"
+            [idListaTareaSeleccionada]="idListadoTarea" 
+            [nombreListaTareaSeleccionada]="nombreListadoTarea">
+            (newItemEvent)="addItem($event)"
+            </app-tarea-seleccionada>
+        </div>
+
+        <!-- seccion de Comentarios-->
+        <div class="flex-item-right">
+            <mat-card *ngIf="mostrarComentarios" style=" height: 550px; overflow:auto">
+                <h3>Comentarios</h3>
+                <mat-card-content *ngFor="let c of comentarios">
+                    <mat-card style="background-color: #d6e0f5; color: #000080;">
+                        <mat-panel-title style="background-color: #d6e0f5; color: #000080; font-weight: bold;">
+                            {{c.usuarioAdiciono}}
+                        </mat-panel-title>
+                        <mat-panel-description>{{c.fechaAdicion | date:'dd-MM-yy - h:mm a'}}</mat-panel-description>
+                        {{c.comentario}}
+                    </mat-card>
+                </mat-card-content>
+
+                <mat-card-content>
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Agregar Comentario</mat-label>
+                        <textarea #comentario (input)="agregandoComentario()" matInput autocomplete="off" rows="2" cdkTextareaAutosize="true" [formControl]="comentarioIngresado"></textarea>
+                    </mat-form-field>
+                    <div style="text-align: center;">
+                        <button style="margin-right: 10px;" (click)="ocultarBotonComentario(); limpiarComentario();"  *ngIf="comentando" mat-mini-fab color="warn">
+                            <mat-icon>cancel</mat-icon>
+                        </button>
+                        <button *ngIf="comentando" mat-mini-fab color="primary" (click)="crearComentario()">
+                            <mat-icon>send</mat-icon>
+                        </button>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+
+</div>
+
+
+<!--Dialog para editar Informacion de un tablero-->
+<ng-template #callAPIDialog>
+    <mat-card-content>
+        <form class="example-form">
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Nombre Tablero</mat-label>
+                <input matInput autocomplete="off" [formControl]="nombreTablero">
+                <mat-error>Este es un campo obligatorio</mat-error>
+            </mat-form-field>
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Descripción</mat-label>
+                <textarea matInput autocomplete="off" rows="3" cdkTextareaAutosize="true"
+                    [formControl]="descripcion"></textarea>
+            </mat-form-field>
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Estado</mat-label>
+                <input matInput autocomplete="off" [formControl]="estado">
+            </mat-form-field>
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Usuario Asignado</mat-label>
+                <input matInput autocomplete="off" [formControl]="usuarioAsignado">
+            </mat-form-field>
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Publico</mat-label>
+                <input matInput autocomplete="off" [formControl]="esPublico">
+            </mat-form-field>
+        </form>
+    </mat-card-content>
+    <mat-dialog-actions >
+        <button mat-raised-button color="warn" matDialogClose="no">Cancelar</button>
+        <button mat-raised-button color="primary" matDialogClose="yes">Modificar</button>
+    </mat-dialog-actions>
+</ng-template>
+
+<!--menu de opciones de tarea-->
+<mat-menu  #menu="matMenu">
+    <button mat-menu-item (click)="editarTableroSeleccionado()">
+      <mat-icon style="color: #0059b3;">edit</mat-icon>
+      <span>Editar</span>
+    </button>
+    <button mat-menu-item (click)="eliminarTableroSeleccionado()">
+        <mat-icon style="color: #cd0000;">delete</mat-icon>
+        <span>Eliminar</span>
+      </button>
+  </mat-menu> 
+
+  <!--Dialog para Eliminar Tablero seleccionado-->
+<ng-template #callEliminarDialog>
+    <mat-card-content>
+        <h2>¿Está seguro que desea eliminar este Tablero?</h2>
+    </mat-card-content>
+    <mat-dialog-actions >
+        <button mat-raised-button color="warn" matDialogClose="no">Cancelar</button>
+        <button mat-raised-button color="primary" matDialogClose="yes">Eliminar</button>
+    </mat-dialog-actions>
+</ng-template>
+
+  <!--Dialog para Etiquetas-->
+<ng-template #callEtiquetaDialog>
+    <mat-card-content>
+        <h2>Etiquetas</h2>
+        <ul style="font-size: 18px;">
+            <li *ngFor="let e of etiquetas">
+                <button mat-icon-button (click)="eliminarEtiqueta(e.codigoEtiqueta)">
+                    <mat-icon style="color: #cd0000;">delete</mat-icon>
+                </button>
+                {{e.nombreEtiqueta}}
+            </li>
+                
+        </ul>
+
+
+            <input style="width: 60%; height: 30px;" matInput autocomplete="off" [formControl]="nuevaEtiqueta">
+            <button mat-icon-button (click)="crearEtiqueta()">
+                <mat-icon style="color: #1911af85; font-weight: bold;">add</mat-icon>
+            </button>
+
+
+    </mat-card-content>
+</ng-template>

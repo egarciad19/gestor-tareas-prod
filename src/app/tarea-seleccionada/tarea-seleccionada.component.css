@@ -1,0 +1,81 @@
+* {
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+}
+
+  table {
+    margin-top: 10px;
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 16px;
+    
+  }
+  
+  th, td {
+    text-align: center;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    color: black;
+    
+  }
+  
+  tbody tr:hover {
+    background-color: rgb(100, 185, 255);
+    color:#ffffff !important;
+    cursor: pointer;
+  }
+
+  hr {
+    border-top:1px dashed rgb(106, 106, 106);
+    /*Rest of stuff here*/
+}
+
+.checkboxStyle{
+  margin: 20px 0;
+  font-size: 18px;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  font-size: 30px;
+  text-align: left;
+}
+
+.flex-item-left {
+  flex: 30%;
+}
+
+.flex-item-center {
+  text-align: center;
+  flex: 40%;
+}
+
+.flex-item-right {
+  flex: 30%;
+}
+
+.btn {
+  cursor: pointer;
+  border-radius: 40px;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  font-size: 15px; }
+  .btn:hover, .btn:active, .btn:focus {
+    outline: none; }
+  .btn.btn-primary {
+    background: #0056ac !important;
+    border: 1px solid #0056ac !important;
+    color: #fff !important; }
+    .btn.btn-primary:hover {
+      border: 1px solid #1089ff;
+      background: transparent;
+      color: #1089ff; }
+    .btn.btn-primary.btn-outline-primary {
+      border: 1px solid #1089ff;
+      background: transparent;
+      color: #1089ff; }
+      .btn.btn-primary.btn-outline-primary:hover {
+        border: 1px solid transparent;
+        background: #1089ff;
+        color: #fff; }

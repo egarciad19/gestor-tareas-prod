@@ -1,0 +1,37 @@
+<!-- 
+<ul>
+    <li><a class="active" href="#home">Home</a></li>
+    <li><a href="#news">News</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+-->
+
+
+<ul>
+  <li><a routerLink="/inicio" routerLinkActive="active" ariaCurrentWhenActive="page">
+    <i class="fas fa-home"></i>
+  </a>
+  </li>
+  <li><a routerLink="/crear-tablero" routerLinkActive="active" ariaCurrentWhenActive="page">
+    Crear Tablero 
+    <span class="material-icons">
+      library_add
+      </span>
+  </a></li>
+  <li><a routerLink="/tableros" routerLinkActive="active" ariaCurrentWhenActive="page">
+    Mis Tableros 
+    <span class="material-icons">
+      list_alt
+      </span> 
+      </a></li>
+</ul>
+
+<div *ngIf="user">
+  <button mat-button [matMenuTriggerFor]="beforeMenu" style="float: right; background-color: white; color: rgb(8, 93, 133); padding: 16px; margin-right: 10px;"> <mat-icon style="transform: scale(2);">account_circle</mat-icon> </button>
+  <mat-menu #beforeMenu="matMenu" xPosition="before">
+    <p mat-menu-item>{{user.username}}</p>
+    <p mat-menu-item>{{user.email}}</p>
+    <button mat-menu-item (click)="salir()">Cerrar Sesion</button>
+  </mat-menu>
+</div>

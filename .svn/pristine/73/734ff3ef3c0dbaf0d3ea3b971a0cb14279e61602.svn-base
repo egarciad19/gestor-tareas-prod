@@ -1,0 +1,106 @@
+* {
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+}
+
+
+/*
+div.sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    padding: 10px;
+    margin-right: 50px;
+    background-color: white;
+  } */
+
+  div.sticky {
+    padding: 10px;
+  }
+
+  .mat-form-field + .mat-form-field {
+    margin-left: 8px;
+  }
+
+  hr {
+    border-top:1px dashed rgb(106, 106, 106);
+    /*Rest of stuff here*/
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  font-size: 30px;
+  text-align: left;
+}
+
+.flex-item-left {
+  flex: 20%;
+}
+
+.flex-item-center {
+  flex: 60%;
+  padding: 20px;
+}
+
+.flex-item-right {
+  flex: 20%;
+}
+
+
+
+/* Responsive layout - makes a one column-layout instead of two-column layout */
+@media (max-width: 800px) {
+  .flex-container {
+    flex-direction: column;
+  }
+}
+
+.esconder {
+  display: none;
+}
+
+.myButton:hover + .esconder {
+  display: inline-block;
+}
+
+
+.flex-container-tablero {
+  display: flex;
+  flex-direction: row;
+  font-size: 30px;
+  text-align: left;
+  margin-top: 16px;
+  margin-bottom: 10px;
+}
+
+.flex-left-tablero {
+  flex: 20%;
+}
+
+.flex-center-tablero {
+  flex: 30%;
+}
+
+
+
+h1{
+  text-align: center;
+}
+
+.example-form {
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+
+mat-label{
+  font-size: 18px;
+}
+
+button{
+  margin-left: 10px;
+}

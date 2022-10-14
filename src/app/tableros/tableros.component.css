@@ -1,0 +1,55 @@
+* {
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+  }
+
+  /*
+div.sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    padding: 10px;
+    margin-right: 50px;
+    background-color: white;
+  }  */
+
+  .flex-container {
+    display: flex;
+    flex-direction: row;
+    font-size: 30px;
+    text-align: center;
+  }
+  
+  .flex-item-left {
+    margin: 10px;
+    background-color: #f1f1f1;
+    padding: 10px;
+    flex: 25%;
+    height: 150px;
+  }
+
+  .flex-item-right {
+    margin: 10px;
+    background-color: #f1f1f1;
+    padding: 10px;
+    flex: 25%;
+    height: 150px;
+  }
+
+
+  /* Responsive layout - makes a one column-layout instead of two-column layout */
+@media (max-width: 800px) {
+    .flex-container {
+      flex-direction: column;
+    }
+  }
+
+
+  .grid-container {
+    margin-top: 20px;
+    margin-right: 60px;
+    display:grid;
+    gap:20px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    text-align: left;
+  }

@@ -1,0 +1,64 @@
+<body style="background: linear-gradient( to bottom, #336699, black); height: 110%;">
+    <section class="ftco-section" style="margin-top: -75px;">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-7 col-lg-5">
+                    <div class="login-wrap p-4 p-md-5">
+                        <div class="icon d-flex align-items-center justify-content-center" style="margin-top: -20px;">
+                            <span class="fas fa-user-plus"></span>
+                        </div>
+                        <div style="text-align:center; align-self: center;" [formGroup]="formulario">
+                            <h2 style="text-align:center; margin-top: -10px;">Registrarse</h2>
+                            <!-- <mat-form-field appearance="standard" style="width: 85%;">
+                                <input matInput placeholder="Usuario" formControlName="usuario" required>
+                                <mat-error *ngIf="formulario.invalid">{{getErrorMessage('usuario')}}</mat-error>
+                            </mat-form-field> -->
+                            <mat-form-field appearance="standard" style="width: 85%;">
+                                <input matInput placeholder="Nombre" formControlName="nombre" required>
+                                <mat-error *ngIf="formulario.invalid">{{getErrorMessage('nombre')}}</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="standard" style="width: 85%;">
+                                <input matInput placeholder="Apellido" formControlName="apellido" required>
+                                <mat-error *ngIf="formulario.invalid">{{getErrorMessage('apellido')}}</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="standard" style="width: 85%;">
+                                <input matInput placeholder="correo@ejemplo.com" formControlName="email" required>
+                                <mat-error *ngIf="formulario.invalid">{{getErrorMessage('email')}}</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="standard" style="width: 85%;">
+                                <input matInput placeholder="0000-0000" formControlName="telefono" required>
+                                <mat-error *ngIf="formulario.invalid">{{getErrorMessage('telefono')}}</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="standard" style="width: 85%;">
+                                <input matInput [type]="hide ? 'password' : 'text'" placeholder="Ingrese Contraseña"
+                                    formControlName="password" required>
+                                <button mat-icon-button matSuffix (click)="hide = !hide"
+                                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                </button>
+                                <mat-error *ngIf="formulario.invalid">{{getErrorMessage('password')}}</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="standard" style="width: 85%;">
+                                <input matInput [type]="hide ? 'password' : 'text'" placeholder="Confirmar Contraseña"
+                                    formControlName="password2" required>
+                                <button mat-icon-button matSuffix (click)="hide = !hide"
+                                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                </button>
+                                <mat-error *ngIf="formulario.invalid">{{getErrorMessage('password2')}}</mat-error>
+                            </mat-form-field>
+                            <br> <br>
+                            <div class="example-button-row">
+                                <button style="float: left; text-align:center; margin-left: 10%;" mat-raised-button
+                                    class="btn btn-secondary rounded" (click)="cancelar()">Cancelar</button>
+                                <button style="float: right; text-align:center; margin-right: 10%;" mat-raised-button
+                                    class="btn btn-primary rounded" (click)="crearCuenta()">Crear Cuenta</button>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>

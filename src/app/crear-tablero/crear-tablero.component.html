@@ -1,0 +1,27 @@
+<app-menu></app-menu>
+<div style="margin-left:15%;padding:1px 16px;height:auto;">
+  <div class="formulario">
+    <h1>Nuevo Tablero de Tareas</h1>
+    <mat-card-content>
+      <form class="example-form">
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Nombre</mat-label>
+          <input matInput autocomplete="off" [formControl]="nombreTablero">
+          <mat-error>Este es un campo obligatorio</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Descripción</mat-label>
+          <textarea matInput autocomplete="off" rows="3" cdkTextareaAutosize="true" [formControl]="descripcion"></textarea>
+        </mat-form-field>
+        
+          <div style="text-align: center;">
+            <button mat-raised-button color="warn" routerLink="/inicio">Cancelar</button>
+            <button mat-raised-button color="primary" (click)="crearTablero()">Crear Tablero</button>
+          </div>
+
+      </form>
+    </mat-card-content>
+  </div>
+
+</div>

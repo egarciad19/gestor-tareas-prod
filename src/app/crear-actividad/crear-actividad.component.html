@@ -1,0 +1,23 @@
+<h3 mat-dialog-title>Crear Actividad para la Lista: <b>{{data.nomList}}</b></h3>
+<mat-dialog-content>
+    <div class="formulario">
+        <mat-card-content>
+            <form class="example-form">
+                <mat-form-field class="example-full-width"  appearance="outline">
+                    <mat-label>Nombre Actividad</mat-label>
+                    <input matInput autocomplete="off" [formControl]="nombreActividad">
+                    <mat-error>Este es un campo obligatorio</mat-error>
+                </mat-form-field> 
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Descripción</mat-label>
+                    <textarea matInput autocomplete="off" rows="3" cdkTextareaAutosize="true"
+                        [formControl]="descripcionActividad"></textarea>
+                </mat-form-field> 
+            </form>
+        </mat-card-content>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button  mat-button mat-dialog-close  mat-raised-button color="warn">Cancelar</button>
+    <button mat-raised-button color="primary" (click)="closeDialog()">Crear Lista Tarea</button>
+</mat-dialog-actions>

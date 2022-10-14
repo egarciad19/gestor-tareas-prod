@@ -1,0 +1,40 @@
+<body style="background: linear-gradient( to bottom, #336699, black); ">
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-7 col-lg-5">
+                    <div class="login-wrap p-4 p-md-5">
+                        <div class="icon d-flex align-items-center justify-content-center">
+                            <span class="fas fa-user"></span>
+                        </div>
+                        <div style="text-align:center; align-self: center;">
+                            <h2 style="text-align:center;">Organizador de Tareas</h2>
+                            <mat-form-field appearance="standard" style="width: 85%;">
+                                <input matInput placeholder="usuario" [formControl]="email" required>
+                                <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+                            </mat-form-field>
+                
+                            <mat-form-field appearance="standard" style="width: 85%;">
+                                <input matInput [type]="hide ? 'password' : 'text'" placeholder="Ingrese Contraseña" [formControl]="password" required>
+                                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                                    [attr.aria-pressed]="hide">
+                                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                </button>
+                                <mat-error *ngIf="password.invalid">{{getErrorMessage()}}</mat-error>
+                            </mat-form-field>
+                            <br> <br>
+                                <div class="example-button-row">
+                                    <button style="float: left; text-align:center; margin-left: 10%;" mat-raised-button class="btn btn-secondary rounded" (click)="registrarse();">Registrarse</button>
+                                    <button style="float: right; text-align:center; margin-right: 10%;" mat-raised-button class="btn btn-primary rounded" (click)="iniciar();">Iniciar Sesión</button>
+                                </div>
+                                <br>
+                        </div>
+                    </div>
+                    <div style="text-align:center">
+                        <span style="color: rgb(47, 112, 162); cursor:pointer;" (click)="invitado()"><i>Ingresar como invitado</i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>

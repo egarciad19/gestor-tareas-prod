@@ -1,0 +1,182 @@
+
+<div>
+    <button *ngIf="nombreListaTareaSeleccionada !== null || nombreListaTareaSeleccionada !== ''" style="font-size: 18px;"  mat-icon-button [matMenuTriggerFor]="menuLista">
+        <mat-icon>more_vert</mat-icon>
+        Lista Tarea: {{nombreListaTareaSeleccionada}}
+    </button>       
+            
+    <hr>
+    <div>
+        <div class="flex-container">
+            <div class="flex-item-left">
+                <button style="font-size: 18px;"  mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
+                    {{nombreTareaSeleccionada}}
+                </button>
+            </div>
+            <div class="flex-item-center">
+                <button mat-flat-button color="primary" (click)="crearListaActividad()">Crear Lista Actividades</button>
+                <!--<button mat-raised-button color="basic">Comentar</button>-->
+            </div>
+            <div class="flex-item-right">
+                <p  style="font-size: 12px; display: inline; margin-left: 60px;"><b>Asignado a: {{dataSource.usuarioAdiciono}}</b></p>
+            </div>
+        </div>
+             
+        <div *ngIf="noListaActividades" style="text-align: center; padding: 40px; color: #cd0000;">
+            <h2>Esta tarea no tiene Lista de Actividades, puede crear una.</h2>
+            <img src="assets/resources/img/noactividad.png">
+        </div>  
+
+        <table *ngIf="tablaActividades">
+            <thead>
+                <th>No.</th>
+                <th>Nombre Listado Actividades</th>
+                <th>Cantidad Actividades</th>
+                <th>Porcentaje</th>
+            </thead>
+            <tbody>
+                <tr (click)="verListadoActividad(d.id, d.nombre)" *ngFor="let d of arregloTabla; let indice = index">
+                    <td>{{indice + 1}}</td>
+                    <td>{{d.nombre}}</td>
+                    <td>{{d.total}}</td>
+                    <td>{{d.porcent | percent}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div *ngIf="actividadSeleccionada">
+            <hr>
+            <div class="flex-container">
+                <div class="flex-item-left">
+                    <button (click)="verTablaActividades()" mat-raised-button color="basic">
+                        <span class="material-icons">
+                            arrow_back
+                            </span>
+                            Volver
+                    </button>
+                </div>
+                <div class="flex-item-center">
+                    <h2 (click)="editarListaActividades()" style="text-align: center; display: inline; cursor: pointer;">
+                        {{nomListadoActSeleccionada}}
+                        <mat-icon style="color: #0059b3;">edit</mat-icon> 
+                    </h2>
+
+                </div>
+                <div class="flex-item-right">
+                    <button mat-raised-button color="primary" (click)="guardarCambios()">
+                        Guardar Cambios
+                        <span class="material-icons">
+                            save_as
+                        </span>
+                    </button>
+                </div>
+            </div>
+
+            <div> 
+                <button style="margin-top: 20px;" mat-raised-button color="primary" (click)="crearActividad()">
+                    Nueva Actividad
+                    <span class="material-icons">
+                        add
+                    </span>
+                </button>
+            </div>
+            
+            <div *ngIf="!noActividades">
+                <div style="width: 50%; float:left;">
+                    <section class="checkboxStyle">
+                        <h3>Selecciona las actividades a completar.</h3>
+                        <p style="width:100px" *ngFor="let a of actividades"><mat-checkbox checked="{{a.estado}}" (change)="completarActividad(a.id)">{{a.nombreActividad}}</mat-checkbox></p>
+                      <!-- <p *ngFor="let a of listaActividades"><mat-checkbox formControlName="pepperoni">{{a.actividad}}</mat-checkbox></p> --> 
+                
+                    </section>
+                </div>
+    
+                  
+                <div style=" height: 200px; width: 50%; float: right; padding: 40px 0; ">
+                    <div style="background-color: #0059b3; color: white; width: 150px; height: 150px; margin: auto; border-radius: 50%; position: relative;">
+                        <div style="position: absolute; width: inherit; height: auto; top: 50%; transform: translateY(-50%); text-align: center;">
+                            {{porcentaje | percent}}
+                        </div>
+                    </div>
+                </div>
+
+                
+            </div>
+
+            <div *ngIf="noActividades" style="text-align: center; padding: 40px; color: #cd0000;">
+                <h2>Esta Lista no contiene actividades, seleccione Nueva Actividad para Crear Actividades.</h2>
+                <img src="assets/resources/img/noactividad.png">
+            </div>  
+
+            
+
+            
+
+        </div>
+          
+    </div>        
+</div>
+    
+<!--menu de opciones de Listado tarea-->
+<mat-menu  #menuLista="matMenu">
+    <button mat-menu-item>
+      <mat-icon style="color: #0059b3;">edit</mat-icon>
+      <span>Editar</span>
+    </button>
+    <button mat-menu-item (click)="eliminarTableroSeleccionado()">
+        <mat-icon style="color: #cd0000;">delete</mat-icon>
+        <span>Eliminar Lista</span>
+      </button>
+  </mat-menu> 
+<!--menu de opciones de tarea-->
+<mat-menu  #menu="matMenu">
+    <button mat-menu-item (click)="editarTareaSeleccionada()">
+      <mat-icon style="color: #0059b3;">edit</mat-icon>
+      <span>Editar</span>
+    </button>
+    <button mat-menu-item>
+        <mat-icon style="color: #cd0000;">delete</mat-icon>
+        <span>Eliminar</span>
+      </button>
+  </mat-menu> 
+
+  <!--Dialog para Eliminar Tablero seleccionado-->
+<ng-template #callEliminarDialog>
+    <mat-card-content>
+        <h2>¿Está seguro que desea eliminar este Tablero?</h2>
+    </mat-card-content>
+    <mat-dialog-actions >
+        <button mat-raised-button color="warn" matDialogClose="no">Cancelar</button>
+        <button mat-raised-button color="primary" matDialogClose="yes">Eliminar</button>
+    </mat-dialog-actions>
+</ng-template>
+
+<!--Dialog para Eliminar Actividades de una lista.-->
+<ng-template #callEliminarActividadesDialog>
+    <mat-card-content>
+        <h2>¿Está seguro que desea eliminar Actividades seleccionadas?</h2>
+        
+        <div *ngFor="let a of actividades">
+             <p style="display: inline;">{{a.nombreActividad}}</p>
+             <button mat-icon-button (click)="habilitarInputEdit(a.id)">
+                <mat-icon style="color: #0059b3;">edit</mat-icon>
+              </button>
+              
+             <button style="display: inline-block;" mat-icon-button (click)="eliminarActividad(a.id)">
+                 <mat-icon style="color: #cd0000;">delete</mat-icon>
+             </button>
+
+             <div *ngIf="inputEditarActividad && a.id === idSelectedActividad">
+                <input [formControl]="nombreActividad" type="text" value="{{a.nombreActividad}}">
+                <button mat-icon-button (click)="editarNombreActividad(a.id, a.nombreActividad)">
+                    <mat-icon style="color: #2fb41aba;">save</mat-icon>
+                </button>
+             </div>
+             
+        </div>
+    </mat-card-content>
+    <mat-dialog-actions >
+        <button mat-raised-button color="primary" matDialogClose="yes">Listo</button>
+    </mat-dialog-actions>
+</ng-template>
